@@ -1,6 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { db } from '../firebase/firebaseConfig'; // Import Firebase services
+import { ref, get } from 'firebase/database'; // Realtime Database methods
 
 function Home() {
+const [candidates, setCandidates] = useState([]);
+        
+
+        // Fetch candidates from Firebase Realtime Database
+        useEffect(() => {
+          const fetchCandidates = async () => {
+            const candidateRef = ref(db, 'candidates'); // Reference to the 'candidates' node
+            try {
+              const snapshot = await get(candidateRef); // Get the data
+              if (snapshot.exists()) {
+                const candidatesData = snapshot.val();
+                const candidatesArray = Object.keys(candidatesData).map(key => ({
+                  id: key,
+                  ...candidatesData[key],
+                }));
+                setCandidates(candidatesArray); // Update the state with the fetched data
+              }
+            } catch (error) {
+              console.error('Error fetching candidates:', error);
+            }
+          };
+      
+          fetchCandidates();
+        }, []);
+
+        const candidateChunks = [];
+        for (let i = 0; i < candidates.length; i += 2) {
+            candidateChunks.push(candidates.slice(i, i + 2));
+        }
+    
+
     const userUID = localStorage.getItem('userUID');
         if (userUID) {
         console.log('Logged in user UID:', userUID);
@@ -72,129 +105,57 @@ function Home() {
 
       {/* Voting Section */}
       <section className="do_section layout_padding2" id="vote">
-        <div className="container">
-          <div className="custom_heading-container">
-            <h2>Vote</h2>
-          </div>
-          <div className="row">
-            <div className="col-md-3 col-sm-6">
-              <div className="content-box bg-red">
-                <div className="img-box">
-                  <img src="images/idea.png" alt="Candidate 1" />
-                </div>
-                <div className="detail-box">
-                  <h6>Candidate 1</h6>
-                  <p><strong>Slogan</strong></p>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-3 col-sm-6">
-              <div className="content-box bg-red">
-                <div className="img-box">
-                  <img src="images/idea.png" alt="Candidate 1" />
-                </div>
-                <div className="detail-box">
-                  <h6>Candidate 1</h6>
-                  <p><strong>Slogan</strong></p>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-3 col-sm-6">
-              <div className="content-box bg-red">
-                <div className="img-box">
-                  <img src="images/idea.png" alt="Candidate 1" />
-                </div>
-                <div className="detail-box">
-                  <h6>Candidate 1</h6>
-                  <p><strong>Slogan</strong></p>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-3 col-sm-6">
-              <div className="content-box bg-red">
-                <div className="img-box">
-                  <img src="images/idea.png" alt="Candidate 1" />
-                </div>
-                <div className="detail-box">
-                  <h6>Candidate 1</h6>
-                  <p><strong>Slogan</strong></p>
-                </div>
-              </div>
-            </div>
-            {/* Repeat for other candidates */}
-          </div>
+      <div className="container">
+        <div className="custom_heading-container">
+          <h2>Vote</h2>
         </div>
-      </section>
+        <div className="row">
+          {candidates.map((candidate) => (
+            <div key={candidate.id} className="col-md-3 col-sm-6">
+              <div className="content-box bg-red">
+                <div className="img-box">
+                  <img src="images/idea.png" alt={candidate.name} />
+                </div>
+                <div className="detail-box">
+                  <h6>{candidate.name}</h6>
+                  <p>
+                    <strong>{candidate.party}</strong>
+                  </p>
+                  <p>Votes: {candidate.votes}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
 
       {/* Candidate Section */}
-      <section className="client_section layout_padding-bottom">
-        <div className="container">
-          <div className="custom_heading-container">
-            <h2>Candidates</h2>
-          </div>
+      <section className="candidate_section layout_padding-bottom">
+      <div className="container">
+        <div className="custom_heading-container">
+          <h2>Candidates</h2>
         </div>
-
-        <div className="container">
-          <div id="carouselExample2Controls" className="carousel slide" data-ride="carousel">
-            <div className="carousel-inner">
-              <div className="carousel-item active">
-                <div className="client_container layout_padding2">
-                  <div className="client_box b-1">
-                    <div className="client-id">
-                      <div className="img-box">
-                        <img src="images/client-1.jpg" alt="Candidate 1" />
-                      </div>
-                      <div className="name">
-                        <h5>Smirth Jon</h5>
-                        <p>Party</p>
-                      </div>
-                    </div>
-                    <div className="detail">
-                      <p>Manifesto</p>
-                    </div>
-                  </div>
-                  <div className="client_box b-1">
-                    <div className="client-id">
-                      <div className="img-box">
-                        <img src="images/client-1.jpg" alt="Candidate 1" />
-                      </div>
-                      <div className="name">
-                        <h5>Smirth Jon</h5>
-                        <p>Party</p>
-                      </div>
-                    </div>
-                    <div className="detail">
-                      <p>Manifesto</p>
-                    </div>
-                  </div>
-                  <div className="client_box b-1">
-                    <div className="client-id">
-                      <div className="img-box">
-                        <img src="images/client-1.jpg" alt="Candidate 1" />
-                      </div>
-                      <div className="name">
-                        <h5>Smirth Jon</h5>
-                        <p>Party</p>
-                      </div>
-                    </div>
-                    <div className="detail">
-                      <p>Manifesto</p>
-                    </div>
-                  </div>
-                  {/* Repeat for other clients */}
+        <div className="candidate_grid">
+          {candidates.map((candidate) => (
+            <div key={candidate.id} className="candidate_box">
+              <div className="client-id">
+                <div className="img-box">
+                  <img src="images/client-1.jpg" alt={candidate.name} />
+                </div>
+                <div className="name">
+                  <h5>{candidate.name}</h5>
+                  <p>{candidate.party}</p>
                 </div>
               </div>
-              {/* Additional carousel items */}
+              <div className="detail">
+                <p>{candidate.manifesto}</p>
+              </div>
             </div>
-            <a className="carousel-control-prev" href="#carouselExample2Controls" role="button" data-slide="prev">
-              <span className="sr-only">Previous</span>
-            </a>
-            <a className="carousel-control-next" href="#carouselExample2Controls" role="button" data-slide="next">
-              <span className="sr-only">Next</span>
-            </a>
-          </div>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
 
 
 

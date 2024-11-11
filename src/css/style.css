@@ -135,6 +135,46 @@ a:focus {
   color: initial;
 }
 
+.candidate_section {
+  padding-bottom: 2rem;
+}
+
+.candidate_grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.candidate_box {
+  flex: 1 1 calc(50% - 1.5rem); /* Two columns with a gap */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.client-id .img-box img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.name h5 {
+  margin-top: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.detail p {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+}
+
+
 .btn,
 .btn:focus {
   outline: none !important;
