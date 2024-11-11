@@ -1,6 +1,12 @@
 import React from 'react';
 
 function Home() {
+    const userUID = localStorage.getItem('userUID');
+        if (userUID) {
+        console.log('Logged in user UID:', userUID);
+        } else {
+        console.log('User is not logged in.');
+        }
   return (
     <div>
       {/* About Section */}

@@ -2,6 +2,12 @@
 import React from 'react';
 
 const Service = () => {
+    const userUID = localStorage.getItem('userUID');
+    if (userUID) {
+    console.log('Logged in user UID:', userUID);
+    } else {
+    console.log('User is not logged in.');
+    }
   return (
     
     <section className="skill_section layout_padding2">
