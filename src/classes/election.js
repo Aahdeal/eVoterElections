@@ -3,17 +3,28 @@ import { ref, get } from 'firebase/database';
 
 class Election {
   constructor() {
-    this.numVoters = 0;        // Total eligible voters in the election
-    this.totalVotes = 0;        // Total votes cast
-    this.voterTurnout = 0;      // Percentage of eligible voters who voted
-    this.candidateVotes = {};   // Object to store vote counts per candidate
+    this.numVoters = 0;             // Total eligible voters in the election
+    this.totalVotes = 0;             // Total votes cast
+    this.voterTurnout = 0;           // Percentage of eligible voters who voted
+    this.candidateVotes = {};        // Object to store vote counts per candidate
+    this.provinceVotes = {
+      'Gauteng': {totalVotes:0, candidates:{}},
+      'Western Cape': {totalVotes:0, candidates:{}},
+      'Northern Cape': {totalVotes:0, candidates:{}},
+      'Eastern Cape': {totalVotes:0, candidates:{}},
+      'KwaZuluNatal': {totalVotes:0, candidates:{}},
+      'Mpumalanga': {totalVotes:0, candidates:{}},
+      'Limpopo': {totalVotes:0, candidates:{}},
+      'North West': {totalVotes:0, candidates:{}},
+      'Free State': {totalVotes:0, candidates:{}},
+    };         // Object to store vote counts per province and candidate per province
   }
 
   // Initialize with data from Firebase
   async initializeElectionData() {
     try {
-      const votersRef = ref(db, 'users');    // Total registered voters
-      const candidatesRef = ref(db, 'candidates');  // Candidate vote data
+      const votersRef = ref(db, 'users');    // Reference to total registered voters
+      const votesRef = ref(db, 'votes');      // Reference to all votes
 
       // Get total voters
       const votersSnapshot = await get(votersRef);
@@ -21,18 +32,44 @@ class Election {
         this.numVoters = Object.keys(votersSnapshot.val()).length;
       }
 
-      // Get candidate vote counts
-      const candidatesSnapshot = await get(candidatesRef);
-      if (candidatesSnapshot.exists()) {
-        const candidatesData = candidatesSnapshot.val();
-        for (const candidateID in candidatesData) {
-          this.candidateVotes[candidateID] = candidatesData[candidateID].votes || 0;
-          this.totalVotes += candidatesData[candidateID].votes || 0;
+      // Get votes and calculate totals
+      const votesSnapshot = await get(votesRef);
+      if (votesSnapshot.exists()) {
+        const votesData = votesSnapshot.val();
+        
+        for (const voteID in votesData) {
+          const vote = votesData[voteID];
+          const { candidateID, province } = vote;
+
+          // Increment total votes
+          this.totalVotes++;
+
+          // Count votes for each candidate
+          if (!this.candidateVotes[candidateID]) {
+            this.candidateVotes[candidateID] = 0;
+          }
+          this.candidateVotes[candidateID]++;
+
+          // Count votes by province
+          if (!this.provinceVotes[province]) {
+            this.provinceVotes[province] = {
+              totalVotes: 0,
+              candidates: {}
+            };
+          }
+          this.provinceVotes[province].totalVotes++;
+
+          // Count votes for each candidate within each province
+          if (!this.provinceVotes[province].candidates[candidateID]) {
+            this.provinceVotes[province].candidates[candidateID] = 0;
+          }
+          this.provinceVotes[province].candidates[candidateID]++;
         }
       }
 
       // Calculate voter turnout
       this.calculateVoterTurnout();
+
     } catch (error) {
       console.error('Error initializing election data:', error);
     }
@@ -50,6 +87,11 @@ class Election {
     return this.candidateVotes;
   }
 
+  // Get the votes by province, showing total and per-candidate breakdown
+  getVotesByProvince() {
+    return this.provinceVotes;
+  }
+
   // Display a summary of the election
   getElectionSummary() {
     return {
@@ -57,6 +99,7 @@ class Election {
       totalVotes: this.totalVotes,
       voterTurnout: `${this.voterTurnout}%`,
       candidateVotes: this.candidateVotes,
+      provinceVotes: this.provinceVotes,
     };
   }
 }

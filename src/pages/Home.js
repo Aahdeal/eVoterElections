@@ -1,25 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebase/firebaseConfig'; // Import Firebase services
-import { ref, get } from 'firebase/database'; // Realtime Database methods
+import { ref, get, onValue } from 'firebase/database'; // Realtime Database methods
 import Vote from '../classes/vote';
 import { Voter } from '../classes/voter';
 import Election from '../classes/election';
+import Select from 'react-select';
 
 function Home() {
 const [candidates, setCandidates] = useState([]);
 const [voter, setVoter] = useState(null);
+const [provinceFilter, setProvince] = useState("");
 const [electionSummary, setElectionSummary] = useState({
   numVoters: 0,
   totalVotes: 0,
   voterTurnout: '0%',
   candidateVotes: {},
+  provinceVotes: {},
 });
+
+const provinces = [
+  { value: 'Gauteng', label: 'Gauteng' },
+  { value: 'Western Cape', label: 'Western Cape' },
+  { value: 'Eastern Cape', label: 'Eastern Cape' },
+  { value: 'Northern Cape', label: 'Northern Cape' },
+  { value: 'Free State', label: 'Free State' },
+  { value: 'North West', label: 'North West' },
+  { value: 'KwaZuluNatal', label: 'KwaZuluNatal' },
+  { value: 'Mpumalanga', label: 'Mpumalanga' },
+  { value: 'Limpopo', label: 'Limpopo' },
+];
 
   // Load Voter object from session on mount
     useEffect(() => {
       const storedVoterData = JSON.parse(sessionStorage.getItem('voter'));
       if (storedVoterData) {
-        const loadedVoter = new Voter(storedVoterData.email, storedVoterData.idNumber, storedVoterData.hasVoted, storedVoterData.uid, storedVoterData.province);
+        const loadedVoter = new Voter(
+          storedVoterData.email, 
+          storedVoterData.idNumber, 
+          storedVoterData.hasVoted, 
+          storedVoterData.uid, 
+          storedVoterData.province
+        );
         setVoter(loadedVoter);
         console.log(loadedVoter)
       }
@@ -54,7 +75,10 @@ const [electionSummary, setElectionSummary] = useState({
   };
 
    useEffect(() => {
-      fetchElectionData();
+      const electionRef = ref(db, 'vote');
+      onValue(electionRef, () => {
+        fetchElectionData(); // Refetch election data on any changes in votes
+      });
     }, []);
 
     const candidateChunks = [];
@@ -66,7 +90,7 @@ const [electionSummary, setElectionSummary] = useState({
       if (!voter || voter.hasVoted) return;
 
       // Create a new Vote instance and cast the vote
-      const newVote = new Vote(voter.idNumber, candidateId);
+      const newVote = new Vote(voter.uid, candidateId, new Date(), voter.province);
       await newVote.castVote();
 
       // Update Voter state to indicate they have voted
@@ -141,6 +165,28 @@ const [electionSummary, setElectionSummary] = useState({
                   </li>
                 ))}
               </ul>
+
+              <div>
+              <h3>Filter by Province</h3>
+              <Select 
+                options={provinces}
+                value={provinces.find(option => option.value === provinceFilter)}
+                onChange={(selectedOption) => setProvince(selectedOption)}
+                placeholder="Select Province"
+                isClearable 
+              />
+              {(provinceFilter != null) && (
+                <p>Total votes for province {electionSummary.provinceVotes[provinceFilter["value"]].totalVotes}</p>
+              )}
+              <h3>Candidate Votes</h3>
+              <ul>
+                {Object.entries(electionSummary.provinceVotes[provinceFilter["value"]].candidates).map(([candidateID, votes]) => (
+                  <li key={candidateID}>
+                    <strong>Candidate {candidateID}:</strong> {votes} votes
+                  </li>
+                ))}
+              </ul>
+            </div>
             </div>
           </div>
         </div>
