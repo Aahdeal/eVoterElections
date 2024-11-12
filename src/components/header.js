@@ -1,8 +1,37 @@
 // src/components/Header.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { auth } from '../firebase/firebaseConfig';
+import { signOut } from 'firebase/auth';
+import {Voter} from '../classes/voter'
 
 const Header = () => {
+  const [voter, setVoter] = useState(null);
+
+  useEffect(() => {
+    const storedVoterData = JSON.parse(sessionStorage.getItem('voter'));
+    if (storedVoterData) {
+      const loadedVoter = new Voter(storedVoterData.email, storedVoterData.idNumber, storedVoterData.hasVoted, storedVoterData.uid);
+      setVoter(loadedVoter);
+      console.log(loadedVoter.hasVoted)
+    }
+  }, []);
+
+  const logout = async () => {
+    try {
+      // Sign out the user from Firebase
+      await signOut(auth);
+
+      // Remove Voter object from session storage
+      sessionStorage.removeItem('voter');
+
+      console.log('User logged out successfully and voter removed from session.');
+      window.location.reload();
+    } catch (error) {
+      console.error('Error logging out:', error.message);
+    }
+  };
+
   return (
     <header className="header_section">
       <div className="container-fluid">
@@ -30,13 +59,18 @@ const Header = () => {
               </li>
             </ul>
             <div className="user_option">
-              <div className="login_btn-container">
-                <Link to="/login">Login</Link>
-                <Link to="/register">Register</Link>
-              </div>
-              <form className="form-inline my-2 my-lg-0">
-                <button className="btn my-2 my-sm-0 nav_search-btn" type="submit"></button>
-              </form>
+              {voter && (
+                <div className="login_btn-container">
+                  <button onClick={() => logout()}>Logout</button>
+                </div>
+              )
+              }
+              {!voter && (
+                <div className="login_btn-container">
+                  <Link to="/login">Login</Link>
+                  <Link to="/register">Register</Link>
+                </div> 
+              )}            
             </div>
           </div>
         </div>

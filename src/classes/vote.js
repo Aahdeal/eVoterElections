@@ -25,11 +25,14 @@ class Vote {
               // Update the vote count by 1
               await update(candidateRef, { votes: currentVotes + 1 });
               console.log(`Vote cast successfully for Candidate ${this.candidateID}`);
+              return true;
             } else {
               console.error('Candidate not found.');
+              return false;
             }
           } catch (error) {
             console.error('Error casting vote:', error);
+            return false;
           }
     }
   }

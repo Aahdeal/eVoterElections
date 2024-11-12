@@ -9,12 +9,6 @@ import Register from './pages/Register';
 import Footer from './components/footer';
 
 function App() {
-  const userUID = localStorage.getItem('userUID');
-    if (userUID) {
-      console.log('Logged in user UID:', userUID);
-    } else {
-      console.log('User is not logged in.');
-    }
   return (
     <Router>
       <Header />

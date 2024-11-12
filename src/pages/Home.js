@@ -1,9 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebase/firebaseConfig'; // Import Firebase services
 import { ref, get } from 'firebase/database'; // Realtime Database methods
+import Vote from '../classes/vote';
+import { Voter } from '../classes/voter';
 
 function Home() {
 const [candidates, setCandidates] = useState([]);
+const [voter, setVoter] = useState(null);
+
+  // Load Voter object from session on mount
+    useEffect(() => {
+      const storedVoterData = JSON.parse(sessionStorage.getItem('voter'));
+      if (storedVoterData) {
+        const loadedVoter = new Voter(storedVoterData.email, storedVoterData.idNumber, storedVoterData.hasVoted, storedVoterData.uid);
+        setVoter(loadedVoter);
+        console.log(loadedVoter)
+      }
+    }, []);
         
 
         // Fetch candidates from Firebase Realtime Database
@@ -34,12 +47,34 @@ const [candidates, setCandidates] = useState([]);
         }
     
 
-    const userUID = localStorage.getItem('userUID');
-        if (userUID) {
-        console.log('Logged in user UID:', userUID);
-        } else {
-        console.log('User is not logged in.');
-        }
+       
+
+    const handleVote = async (candidateId) => {
+      if (!voter || voter.hasVoted) return;
+
+      // Create a new Vote instance and cast the vote
+      const newVote = new Vote(voter.idNumber, candidateId);
+      await newVote.castVote();
+
+      // Update Voter state to indicate they have voted
+      await voter.castVote();
+      sessionStorage.setItem('voter', JSON.stringify(voter));
+      setVoter({ ...voter });
+
+      // Re-fetch candidates to update the vote count on the screen
+      const candidateRef = ref(db, 'candidates');
+      const snapshot = await get(candidateRef);
+      if (snapshot.exists()) {
+        const candidatesData = snapshot.val();
+        const candidatesArray = Object.keys(candidatesData).map(key => ({
+          id: key,
+          ...candidatesData[key],
+        }));
+        setCandidates(candidatesArray);
+      }
+
+    }
+
   return (
     <div>
       {/* About Section */}
@@ -58,7 +93,12 @@ const [candidates, setCandidates] = useState([]);
                 </div>
                 <p>Content goes here</p>
                 <div>
-                  <a href="#vote">Vote Now</a>
+                  {voter && !voter.hasVoted && (
+                      <a href="#vote">Vote Now</a>
+                  )}
+                  {(!voter || voter.hasVoted) && (
+                      <a href="#results">View results</a>
+                  )}
                 </div>
               </div>
             </div>
@@ -67,7 +107,7 @@ const [candidates, setCandidates] = useState([]);
       </section>
 
       {/* Voting Results Section */}
-      <section className="skill_section layout_padding2">
+      <section className="skill_section layout_padding2" id='results'>
         <div className="container">
           <div className="custom_heading-container">
             <h2>Voting Results</h2>
@@ -122,6 +162,9 @@ const [candidates, setCandidates] = useState([]);
                     <strong>{candidate.party}</strong>
                   </p>
                   <p>Votes: {candidate.votes}</p>
+                  {voter && !voter.hasVoted && (
+                      <button onClick={() => handleVote(candidate.id)}>Vote</button>
+                  )}
                 </div>
               </div>
             </div>
