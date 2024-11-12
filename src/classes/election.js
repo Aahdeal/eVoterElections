@@ -12,7 +12,7 @@ class Election {
   // Initialize with data from Firebase
   async initializeElectionData() {
     try {
-      const votersRef = ref(db, 'voters');    // Total registered voters
+      const votersRef = ref(db, 'users');    // Total registered voters
       const candidatesRef = ref(db, 'candidates');  // Candidate vote data
 
       // Get total voters

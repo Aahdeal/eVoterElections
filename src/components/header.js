@@ -11,7 +11,7 @@ const Header = () => {
   useEffect(() => {
     const storedVoterData = JSON.parse(sessionStorage.getItem('voter'));
     if (storedVoterData) {
-      const loadedVoter = new Voter(storedVoterData.email, storedVoterData.idNumber, storedVoterData.hasVoted, storedVoterData.uid);
+      const loadedVoter = new Voter(storedVoterData.email, storedVoterData.idNumber, storedVoterData.hasVoted, storedVoterData.uid, storedVoterData.province);
       setVoter(loadedVoter);
       console.log(loadedVoter.hasVoted)
     }

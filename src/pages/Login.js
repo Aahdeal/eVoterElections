@@ -50,7 +50,7 @@ const Login = () => {
   
         if (snapshot.exists()) {
           const voterData = snapshot.val();
-          const voter = new Voter(user.email, voterData.idNumber, voterData.hasVoted, userId);
+          const voter = new Voter(user.email, voterData.idNumber, voterData.hasVoted, userId, voterData.province);
   
           // Store the Voter object in session storage
           sessionStorage.setItem('voter', JSON.stringify(voter));
