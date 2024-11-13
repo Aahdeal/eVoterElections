@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebase/firebaseConfig'; // Import Firebase services
-import { ref, get, onValue } from 'firebase/database'; // Realtime Database methods
+import { ref, get, onValue, off } from 'firebase/database'; // Realtime Database methods
 import Vote from '../classes/vote';
 import { Voter } from '../classes/voter';
 import Election from '../classes/election';
 import Select from 'react-select';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 function Home() {
 const [candidates, setCandidates] = useState([]);
@@ -75,10 +77,16 @@ const provinces = [
   };
 
    useEffect(() => {
-      const electionRef = ref(db, 'vote');
-      onValue(electionRef, () => {
-        fetchElectionData(); // Refetch election data on any changes in votes
+      const electionRef = ref(db, 'votes');
+      // Set up real-time listener
+      const unsubscribe = onValue(electionRef, (snapshot) => {
+        fetchElectionData(); // Refetch election data whenever there's a change
       });
+
+      // Clean up listener on component unmount
+      return () => {
+        off(electionRef, 'value', unsubscribe); // Remove the event listener
+      };
     }, []);
 
     const candidateChunks = [];
@@ -145,53 +153,94 @@ const provinces = [
 
       {/* Voting Results Section */}
       <section className="skill_section layout_padding2" id="results">
-      <div className="container">
-        <div className="custom_heading-container">
-          <h2>Voting Results</h2>
-        </div>
-        <div className="skill_padding">
-          <div className="row">
-            <div className="col-12">
-              <h3>Election Summary</h3>
-              <p><strong>Total Registered Voters:</strong> {electionSummary.numVoters}</p>
-              <p><strong>Total Votes Cast:</strong> {electionSummary.totalVotes}</p>
-              <p><strong>Voter Turnout:</strong> {electionSummary.voterTurnout}</p>
-              
-              <h3>Candidate Votes</h3>
-              <ul>
-                {Object.entries(electionSummary.candidateVotes).map(([candidateID, votes]) => (
-                  <li key={candidateID}>
-                    <strong>Candidate {candidateID}:</strong> {votes} votes
-                  </li>
-                ))}
-              </ul>
+        <div className="container">
+          <div className="custom_heading-container">
+            <h2>Voting Results</h2>
+          </div>
+          <div className="skill_padding">
+            <div className="row">
+              <div className="col-12">
+                <h3>Election Summary</h3>
+                <div className="summary-container">
+                  <div className="summary-item">
+                    <p><strong>Total Registered Voters:</strong> {electionSummary.numVoters}</p>
+                  </div>
+                  <div className="summary-item">
+                    <p><strong>Total Votes Cast:</strong> {electionSummary.totalVotes}</p>
+                  </div>
+                  <div className="progress-bar-container">
+                    <CircularProgressbar
+                      value={parseFloat(electionSummary.voterTurnout) || 0}
+                      maxValue={100}
+                      text={`${electionSummary.voterTurnout}`}
+                      styles={buildStyles({
+                        pathColor: `white`,
+                        textColor: 'black',
+                      })}
+                    />
+                    <p>Voter Turnout</p>
+                  </div>
+                </div>
+                
+                <h3>Candidate Votes</h3>
+                <div className="candidate-container">
+                  {Object.entries(electionSummary.candidateVotes).map(([candidateID, votes]) => (
+                    <div key={candidateID} className="candidate-item">
+                      <strong>{candidates.find(candidate => candidate.id === candidateID).name}:</strong> <br/>
+                      {votes} votes <br/>
+                      {(votes / electionSummary.totalVotes * 100).toFixed(2)}% of total votes
+                    </div>
+                  ))}
+                </div>
 
-              <div>
-              <h3>Filter by Province</h3>
-              <Select 
-                options={provinces}
-                value={provinces.find(option => option.value === provinceFilter)}
-                onChange={(selectedOption) => setProvince(selectedOption)}
-                placeholder="Select Province"
-                isClearable 
-              />
-              {(provinceFilter != null) && (
-                <p>Total votes for province {electionSummary.provinceVotes[provinceFilter["value"]].totalVotes}</p>
-              )}
-              <h3>Candidate Votes</h3>
-              <ul>
-                {Object.entries(electionSummary.provinceVotes[provinceFilter["value"]].candidates).map(([candidateID, votes]) => (
-                  <li key={candidateID}>
-                    <strong>Candidate {candidateID}:</strong> {votes} votes
-                  </li>
-                ))}
-              </ul>
-            </div>
+                <div>
+                  <h3>Filter by Province</h3>
+                  <Select
+                    options={provinces}
+                    value={provinces.find(option => option.value === provinceFilter)}
+                    onChange={(selectedOption) => setProvince(selectedOption)}
+                    placeholder="Select Province"
+                    isClearable
+                  />
+                  
+                  {provinceFilter !== "" && (
+                    <div className="summary-container">
+                      <p><strong>Total Registered Voters:</strong> {electionSummary.provinceVotes[provinceFilter.value].totalVoters}</p>
+                      <p><strong>Total Votes Cast:</strong> {electionSummary.provinceVotes[provinceFilter.value].totalVotes}</p>
+
+                      <div className="progress-bar-container">
+                        <CircularProgressbar
+                          value={parseFloat(electionSummary.provinceVotes[provinceFilter.value].voterTurnout) || 0}
+                          maxValue={100}
+                          text={`${electionSummary.provinceVotes[provinceFilter.value].voterTurnout}`}
+                          styles={buildStyles({
+                            pathColor: `white`,
+                            textColor: 'black',
+                          })}
+                        />
+                        <p>Voter Turnout</p>
+                      </div>
+                      <p>Total votes for province {electionSummary.provinceVotes[provinceFilter.value].totalVotes}</p>
+                    </div>
+                  )}
+
+                  <h3>Candidate Votes</h3>
+                  <div className="candidate-container">
+                    {provinceFilter !== "" && Object.entries(electionSummary.provinceVotes[provinceFilter.value].candidates).map(([candidateID, votes]) => (
+                      <div key={candidateID} className="candidate-item">
+                        <strong>{candidates.find(candidate => candidate.id === candidateID).name}:</strong> <br/>
+                        {votes} votes <br/>
+                        {(votes / electionSummary.provinceVotes[provinceFilter.value].totalVotes * 100).toFixed(2)}% of province's votes
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
 
       {/* Voting Section */}
       <section className="do_section layout_padding2" id="vote">

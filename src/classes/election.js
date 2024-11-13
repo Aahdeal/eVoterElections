@@ -8,15 +8,15 @@ class Election {
     this.voterTurnout = 0;           // Percentage of eligible voters who voted
     this.candidateVotes = {};        // Object to store vote counts per candidate
     this.provinceVotes = {
-      'Gauteng': {totalVotes:0, candidates:{}},
-      'Western Cape': {totalVotes:0, candidates:{}},
-      'Northern Cape': {totalVotes:0, candidates:{}},
-      'Eastern Cape': {totalVotes:0, candidates:{}},
-      'KwaZuluNatal': {totalVotes:0, candidates:{}},
-      'Mpumalanga': {totalVotes:0, candidates:{}},
-      'Limpopo': {totalVotes:0, candidates:{}},
-      'North West': {totalVotes:0, candidates:{}},
-      'Free State': {totalVotes:0, candidates:{}},
+      'Gauteng': {totalVotes:0, candidates:{}, totalVoters:0, voterTurnout: 0},
+      'Western Cape': {totalVotes:0, candidates:{}, totalVoters:0, voterTurnout: 0},
+      'Northern Cape': {totalVotes:0, candidates:{}, totalVoters:0, voterTurnout: 0},
+      'Eastern Cape': {totalVotes:0, candidates:{}, totalVoters:0, voterTurnout: 0},
+      'KwaZuluNatal': {totalVotes:0, candidates:{}, totalVoters:0, voterTurnout: 0},
+      'Mpumalanga': {totalVotes:0, candidates:{}, totalVoters:0, voterTurnout: 0},
+      'Limpopo': {totalVotes:0, candidates:{}, totalVoters:0, voterTurnout: 0},
+      'North West': {totalVotes:0, candidates:{}, totalVoters:0, voterTurnout: 0},
+      'Free State': {totalVotes:0, candidates:{}, totalVoters:0, voterTurnout: 0},
     };         // Object to store vote counts per province and candidate per province
   }
 
@@ -29,7 +29,16 @@ class Election {
       // Get total voters
       const votersSnapshot = await get(votersRef);
       if (votersSnapshot.exists()) {
+        const votersData = votersSnapshot.val();
         this.numVoters = Object.keys(votersSnapshot.val()).length;
+
+        for (const voterID in votersData) {
+          const voter = votersData[voterID];
+          const voterProvince = voter.province;
+          if (voterProvince && this.provinceVotes[voterProvince]) {
+            this.provinceVotes[voterProvince].totalVoters += 1;
+          }
+        }
       }
 
       // Get votes and calculate totals
@@ -69,6 +78,7 @@ class Election {
 
       // Calculate voter turnout
       this.calculateVoterTurnout();
+      this.calculateProvinceVoterTurnout();
 
     } catch (error) {
       console.error('Error initializing election data:', error);
@@ -90,6 +100,16 @@ class Election {
   // Get the votes by province, showing total and per-candidate breakdown
   getVotesByProvince() {
     return this.provinceVotes;
+  }
+
+  calculateProvinceVoterTurnout() {
+    Object.keys(this.provinceVotes).forEach(province => {
+      const { totalVotes, totalVoters } = this.provinceVotes[province];
+      // Calculate turnout as a percentage and set it
+      this.provinceVotes[province].voterTurnout = totalVoters > 0
+        ? ((totalVotes / totalVoters) * 100).toFixed(2) // Format to two decimal places
+        : 0; // Set to 0 if there are no registered voters
+    });
   }
 
   // Display a summary of the election
