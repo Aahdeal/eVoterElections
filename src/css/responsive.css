@@ -21,6 +21,12 @@
         flex-direction: column;
     }
 
+    .do_section .content-box.bg-red{
+        min-height: 295px;
+        
+    }
+
+
     .client_section .client_box.b-2 {
         margin-top: 45px;
     }
@@ -94,6 +100,8 @@
     .slider_section .img-box {
         margin-top: 25px;
     }
+
+
 }
 
 @media (max-width: 576px) {

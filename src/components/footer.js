@@ -30,7 +30,7 @@ const Footer = () => {
       {/* Footer Bottom Section */}
       <footer className="container-fluid footer_section">
         <p>
-          2024 All Rights Reserved By ASMAAD001
+          2024 All Rights Reserved
         </p>
       </footer>
 

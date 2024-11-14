@@ -130,6 +130,10 @@ a:focus {
   color: initial;
 }
 
+.candidate_box .img-box img{
+  max-height: 275px;
+}
+
 .candidate_section {
   padding-bottom: 2rem;
 }
@@ -374,10 +378,6 @@ a:focus {
 
 .do_section .content-box.bg-red {
   background-color: #fb1004;
-}
-
-.do_section .content-box.bg-green {
-  background-color: #0ca57a;
 }
 
 .skill_section {
@@ -668,6 +668,7 @@ a:focus {
   border: none;
   border-radius: 15px;
   color: #fa0909;
+  text-align: center;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -783,4 +784,3 @@ a:focus {
 .footer_section a {
   color: #ffffff;
 }
-/*# sourceMappingURL=style.css.map */

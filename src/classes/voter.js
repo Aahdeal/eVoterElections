@@ -33,6 +33,32 @@ class Voter extends User {
       }
       
     }
+
+    async checkStatus() {
+      try {
+        const voterRef = ref(db, `users/${this.uid}`);
+        
+        // Retrieve the voter data
+        const snapshot = await get(voterRef);
+        if (snapshot.exists()) {
+          const voterData = snapshot.val();
+          // Check the hasVoted property
+          if (voterData.hasVoted) {
+            console.log(`Voter ${this.uid} has already voted.`);
+            return true;
+          } else {
+            console.log(`Voter ${this.uid} has not voted yet.`);
+            return false;
+          }
+        } else {
+          console.error('Voter not found.');
+          return false;
+        }
+      } catch (error) {
+        console.error('Error checking vote status:', error);
+        return false;
+      }
+    }
 }
 
 export { Voter };
