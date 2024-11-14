@@ -37,11 +37,10 @@ const Header = () => {
       <div className="container-fluid">
         <nav className="navbar navbar-expand-lg custom_nav-container pt-3">
           <Link className="navbar-brand" to="/">
-            <img src="images/logo.png" alt="" />
             <span>eVoting Election Platform</span>
           </Link>
           <div className="call_btn">
-            <a href="mailto:a.asmal101@gmail.com">Support: a.asmal101@gmail.com</a>
+            <a href="mailto:southafrica@gmail.com">Support: southafrica@gmail.com</a>
           </div>
         </nav>
       </div>
@@ -54,14 +53,11 @@ const Header = () => {
               <li className="nav-item">
                 <Link className="nav-link pl-0" to="/">Home</Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/service">results</Link>
-              </li>
             </ul>
             <div className="user_option">
               {voter && (
                 <div className="login_btn-container">
-                  <button onClick={() => logout()}>Logout</button>
+                  <Link onClick={() => logout()}>Logout</Link>
                 </div>
               )
               }

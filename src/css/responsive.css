@@ -6,12 +6,11 @@
 }
 
 @media (max-width: 992px) {
-    .header_section .call_btn {
-        display: none;
-    }
 
     .custom_menu-container {
-        display: none;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
     }
 
     .slider_section {
@@ -51,6 +50,18 @@
 @media (max-width: 768px) {
     .hero_area {
         height: auto;
+    }
+
+    .custom_heading-container{
+        justify-content: center;
+    }
+
+    .viewButtons{
+        display: flex;
+        flex-direction: column;
+        width: 60%;
+        position: relative;
+        left: 35%
     }
 
     .slider_section {

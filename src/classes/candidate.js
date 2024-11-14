@@ -1,17 +1,12 @@
 // Candidate.js
 class Candidate {
-    constructor(id, name, party, manifesto, votes) {
+    constructor(id, name, party, manifesto, votes, photo) {
       this.id = id;
       this.name = name;
       this.party = party;
       this.manifesto = manifesto;
       this.votes = votes;
-    }
-  
-    // Optional: Add any methods related to Candidate here
-    // For example, you could format the display name or votes
-    getDisplayName() {
-      return `${this.name} (${this.party})`;
+      this.photo = photo;
     }
   
     incrementVote() {
@@ -19,5 +14,5 @@ class Candidate {
     }
   }
   
-  export default Candidate;
+export default Candidate;
   
