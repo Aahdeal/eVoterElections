@@ -18,38 +18,7 @@ Accessible across devices with a mobile-friendly interface.
 Hosted with HTTPS to ensure secure data transmission.
 
 ## Project Structure
-The project is organized as follows:
-
-src/
-├── classes/
-│   ├── Candidate.js
-│   ├── Election.js
-│   ├── User.js
-│   ├── Voter.js
-│   ├── Vote.js
-├── components/
-│   ├── AboutSection.js
-│   ├── CandidateSection.js
-│   ├── Footer.js
-│   ├── Header.js
-│   ├── VoteSection.js
-│   ├── VotingResultsSection.js
-├── css/
-│   ├── bootstrap.css
-│   ├── style.css
-├── firebase/
-│   ├── firebaseConfig.js
-├── hooks/
-│   ├── useCheckVoterStatus.js
-│   ├── useElectionSummary.js
-│   ├── useFetchCandidates.js
-├── pages/
-│   ├── Home.js
-│   ├── Login.js
-│   ├── Register.js
-├── services/
-│   ├── validationService.js
-│   ├── votingService.js
+The project is structured to ensure adherence to the Component Based Framework of React.
 
 ## Requirements
 Node.js (v14+ recommended)
@@ -59,10 +28,10 @@ Setup and Installation
 Clone the Repository:
 
 ## bash
-### git clone https://github.com/your-username/eVotingSystem.git
+### git clone https://github.com/Aahdeal/eVoterElections.git
 ### cd eVotingSystem
-Install Dependencies:
 
+## Install Dependencies:
 ## bash
 ### npm install
 
