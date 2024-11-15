@@ -1,6 +1,9 @@
 # eVoting System
 The eVoting System is a secure and user-friendly platform for conducting elections digitally. This project allows registered voters to securely cast their votes for candidates, view real-time election results, and analyze voter turnout statistics.
 
+### Class Diagram
+![image](https://github.com/user-attachments/assets/a9d1af53-d5c1-4773-87c9-934f0350a730)
+
 ## Features
 User Registration and Authentication:
 Uses Firebase Authentication for secure login and registration.
@@ -28,8 +31,8 @@ Setup and Installation
 Clone the Repository:
 
 ## bash
-### git clone https://github.com/Aahdeal/eVoterElections.git
-### cd eVotingSystem
+git clone https://github.com/Aahdeal/eVoterElections.git
+cd eVotingSystem
 
 ## Install Dependencies:
 ## bash
@@ -42,13 +45,13 @@ Environment Variables:
 
 Add sensitive keys (like Firebase credentials) to environment variables:
 ### makefile
-### REACT_APP_FIREBASE_API_KEY=your_api_key
-### REACT_APP_FIREBASE_AUTH_DOMAIN=your_auth_domain
+REACT_APP_FIREBASE_API_KEY=your_api_key
+REACT_APP_FIREBASE_AUTH_DOMAIN=your_auth_domain
 ...
 ## Build the Project:
 
 ## bash
-### npm run build
+npm run build
 
 ## Deploy to Server:
 Upload the contents of the build/ directory to your hosting server's public_html folder.
@@ -56,7 +59,7 @@ Running the Project Locally
 Start the Development Server:
 
 ## bash
-### npm start
+npm start
 
 ## Access the Application:
 Open your browser and navigate to http://localhost:3000.
