@@ -1,70 +1,106 @@
-# Getting Started with Create React App
+# eVoting System
+The eVoting System is a secure and user-friendly platform for conducting elections digitally. This project allows registered voters to securely cast their votes for candidates, view real-time election results, and analyze voter turnout statistics.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Features
+User Registration and Authentication:
+Uses Firebase Authentication for secure login and registration.
 
-## Available Scripts
+## Vote Casting:
+Registered voters can cast votes for their preferred candidates. The system ensures that each voter can only vote once.
 
-In the project directory, you can run:
+## Real-time Election Data:
+Displays real-time statistics such as total votes, voter turnout, and vote breakdown by province and candidate.
 
-### `npm start`
+## Responsive Design:
+Accessible across devices with a mobile-friendly interface.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Secure and Encrypted Communication:
+Hosted with HTTPS to ensure secure data transmission.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Project Structure
+The project is organized as follows:
 
-### `npm test`
+src/
+├── classes/
+│   ├── Candidate.js
+│   ├── Election.js
+│   ├── User.js
+│   ├── Voter.js
+│   ├── Vote.js
+├── components/
+│   ├── AboutSection.js
+│   ├── CandidateSection.js
+│   ├── Footer.js
+│   ├── Header.js
+│   ├── VoteSection.js
+│   ├── VotingResultsSection.js
+├── css/
+│   ├── bootstrap.css
+│   ├── style.css
+├── firebase/
+│   ├── firebaseConfig.js
+├── hooks/
+│   ├── useCheckVoterStatus.js
+│   ├── useElectionSummary.js
+│   ├── useFetchCandidates.js
+├── pages/
+│   ├── Home.js
+│   ├── Login.js
+│   ├── Register.js
+├── services/
+│   ├── validationService.js
+│   ├── votingService.js
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Requirements
+Node.js (v14+ recommended)
+npm (v7+ recommended)
+Firebase Project (configured for authentication and database)
+Setup and Installation
+Clone the Repository:
 
-### `npm run build`
+## bash
+### git clone https://github.com/your-username/eVotingSystem.git
+### cd eVotingSystem
+Install Dependencies:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## bash
+### npm install
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Set Up Firebase:
+Configure your Firebase project.
+Replace the placeholder configuration in src/firebase/firebaseConfig.js with your Firebase project credentials.
+Environment Variables:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Add sensitive keys (like Firebase credentials) to environment variables:
+### makefile
+### REACT_APP_FIREBASE_API_KEY=your_api_key
+### REACT_APP_FIREBASE_AUTH_DOMAIN=your_auth_domain
+...
+## Build the Project:
 
-### `npm run eject`
+## bash
+### npm run build
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Deploy to Server:
+Upload the contents of the build/ directory to your hosting server's public_html folder.
+Running the Project Locally
+Start the Development Server:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## bash
+### npm start
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Access the Application:
+Open your browser and navigate to http://localhost:3000.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Hosting
+This project is deployed using Afrihost Shared Linux Hosting.
+Ensure the following for hosting:
 
-## Learn More
+Place the contents of the build/ folder in the public_html directory.
+Set up an .htaccess file for routing.
+Configure environment variables through cPanel or .env.local files.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Acknowledgments
+Built using React.js.
+Firebase services for authentication and real-time database.
+Hosted using Afrihost.
