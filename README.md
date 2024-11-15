@@ -1,6 +1,9 @@
 # eVoting System
 The eVoting System is a secure and user-friendly platform for conducting elections digitally. This project allows registered voters to securely cast their votes for candidates, view real-time election results, and analyze voter turnout statistics.
 
+### Class Diagram
+![image](https://github.com/user-attachments/assets/a9d1af53-d5c1-4773-87c9-934f0350a730)
+
 ## Features
 User Registration and Authentication:
 Uses Firebase Authentication for secure login and registration.
