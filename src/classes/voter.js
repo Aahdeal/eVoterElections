@@ -3,11 +3,12 @@ import {db} from '../firebase/firebaseConfig';
 import { ref, update, get } from 'firebase/database';
 
 class Voter extends User {
-    constructor(email, idNumber, hasVoted = false, uid, province) {
+    constructor(email, idNumber, hasVoted = false, uid, province, auth) {
       super(email, idNumber); // Call the parent class constructor with email and idNumber
       this.hasVoted = hasVoted; // Initialize hasVoted, defaulting to false
       this.uid = uid;
       this.province = province;
+      this.auth = auth;
     }
   
     // You can add methods specific to Voter here if needed

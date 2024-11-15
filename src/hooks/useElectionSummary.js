@@ -11,6 +11,7 @@ export const useElectionSummary = () => {
     voterTurnout: '0%',
     candidateVotes: {},
     provinceVotes: {},
+    populationSize: 0
   });
 
   

@@ -24,6 +24,7 @@ class Election {
       'North West': { totalVotes: 0, candidates: {}, totalVoters: 0, voterTurnout: 0 },
       'Free State': { totalVotes: 0, candidates: {}, totalVoters: 0, voterTurnout: 0 },
     };
+    this.populationSize = 100;
   }
 
   // Initialize with data from Firebase
@@ -109,6 +110,7 @@ class Election {
       voterTurnout: `${this.voterTurnout}%`,
       candidateVotes: this.candidateVotes,
       provinceVotes: this.provinceVotes,
+      populationSize: this.populationSize
     };
   }
 }

@@ -5,7 +5,7 @@ import { Voter } from "../classes/voter";
 
 export const handleVote = async (candidateId, voter, candidates) => {
   // Initialize Voter instance
-  voter = new Voter(voter.id, voter.idNumber, voter.hasVoted, voter.uid, voter.province);
+  voter = new Voter(voter.id, voter.idNumber, voter.hasVoted, voter.uid, voter.province, voter.auth);
   if (!voter || voter.hasVoted) return;
 
   // Find the candidate instance by ID

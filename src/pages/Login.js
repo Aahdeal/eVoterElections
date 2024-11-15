@@ -38,9 +38,9 @@ const Login = () => {
     }
 
     try {
-      // Firebase authentication login
-      try {
+        // Firebase authentication login
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        console.log(auth);
         const user = userCredential.user;
         const userId = user.uid;
   
@@ -51,7 +51,7 @@ const Login = () => {
   
         if (snapshot.exists()) {
           const voterData = snapshot.val();
-          const voter = new Voter(user.email, voterData.idNumber, voterData.hasVoted, userId, voterData.province);
+          const voter = new Voter(user.email, voterData.idNumber, voterData.hasVoted, userId, voterData.province, auth);
   
           // Store the Voter object in session storage
           sessionStorage.setItem('voter', JSON.stringify(voter));
@@ -62,19 +62,8 @@ const Login = () => {
           console.error('Voter data not found for this user.');
           setError('User is not registered as a voter.');
         }
-      } catch (error) {
-        console.error('Login error:', error);
-        setError(error.message);
-      }
-
-
-      
-
-      // Redirect user to another page after successful login (if needed)
-      // Example: history.push('/dashboard') or use a routing solution like react-router-dom
-
     } catch (error) {
-      setError('Invalid credentials or error during login.');
+      setError('Invalid credentials.');
       console.error(error.message);
     }
   };

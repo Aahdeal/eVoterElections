@@ -37,7 +37,7 @@ const Header = () => {
       <div className="container-fluid">
         <nav className="navbar navbar-expand-lg custom_nav-container pt-3">
           <Link className="navbar-brand" to="/">
-            <span>eVoting Election Platform</span>
+            <span>e-Voting Election Platform</span>
           </Link>
           <div className="call_btn">
             <a href="mailto:southafrica@gmail.com">Support: southafrica@gmail.com</a>

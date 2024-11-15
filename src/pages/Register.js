@@ -40,6 +40,7 @@ const Register = () => {
     if (!ValidationService.validateIdNumber(idNumber)) {
       setError('Invalid South African ID number. Must be 13 digits.');
       setLoading(false);
+      scrollToError();
       return;
     }
 
@@ -47,6 +48,7 @@ const Register = () => {
     if (!ValidationService.validatePassword(password)) {
       setError('Password must be at least 6 characters.');
       setLoading(false);
+      scrollToError();
       return;
     }
 
@@ -54,6 +56,7 @@ const Register = () => {
     if (!ValidationService.passwordsMatch(password, confirmPassword)) {
       setError('Passwords do not match.');
       setLoading(false);
+      scrollToError();
       return;
     }
 
@@ -62,6 +65,7 @@ const Register = () => {
     if (!isEmailValid) {
       setError('The email address is either invalid or disposable. Please use a valid email.');
       setLoading(false);
+      scrollToError();
       return;
     }
 
@@ -93,8 +97,16 @@ const Register = () => {
     }
   };
 
+  function scrollToError(){
+    const errorMsg = document.getElementById('errorMessage');
+    if (errorMsg) {
+      errorMsg.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+  
+
   return (
-    <section className="about_section layout_padding mt-5">
+    <section className="about_section layout_padding mt-5" id="errorMessage">
         <div className="container">
           <h1>Register</h1>
           {error && <p style={{ color: 'red' }}>{error}</p>}

@@ -784,3 +784,9 @@ a:focus {
 .footer_section a {
   color: #ffffff;
 }
+
+.progress-bars{
+  display: flex;
+  flex-direction: row;
+  gap: 20px
+}

@@ -31,20 +31,35 @@ function VotingResultsSection({ electionSummary, candidates }) {
                 <h3>National Election Summary</h3>
                 <div className="summary-container">
                   <div className="summary-item">
+                  <p><strong>Total Population:</strong> {electionSummary.populationSize}</p>
                     <p><strong>Total Registered Voters:</strong> {electionSummary.numVoters}</p>
                     <p><strong>Total Votes Cast:</strong> {electionSummary.totalVotes}</p>
                   </div>
-                  <div className="progress-bar-container">
-                    <CircularProgressbar
-                      value={parseFloat(electionSummary.voterTurnout) || 0}
-                      maxValue={100}
-                      text={`${electionSummary.voterTurnout}`}
-                      styles={buildStyles({
-                        pathColor: `white`,
-                        textColor: 'black',
-                      })}
-                    />
-                    <p>Voter Turnout</p>
+                  <div className='progress-bars'>
+                    <div className="progress-bar-container">
+                      <CircularProgressbar
+                        value={parseFloat(electionSummary.voterTurnout) || 0}
+                        maxValue={100}
+                        text={`${electionSummary.voterTurnout}`}
+                        styles={buildStyles({
+                          pathColor: `white`,
+                          textColor: 'black',
+                        })}
+                      />
+                      <p>Voter Turnout</p>
+                    </div>
+                    <div className="progress-bar-container">
+                      <CircularProgressbar
+                        value={parseFloat((electionSummary.numVoters/electionSummary.populationSize*100)) || 0}
+                        maxValue={100}
+                        text={`${(electionSummary.numVoters/electionSummary.populationSize*100)}%`}
+                        styles={buildStyles({
+                          pathColor: `white`,
+                          textColor: 'black',
+                        })}
+                      />
+                      <p>Voter Registration</p>
+                    </div>
                   </div>
                   <h3>Candidate Votes</h3>
                 </div>
@@ -73,7 +88,7 @@ function VotingResultsSection({ electionSummary, candidates }) {
                       }
                     }}
                     placeholder="Select Province"
-                    isClearable
+                    isClearable = {false}
                   />
                   
                   {provinceFilter !== "" && (
@@ -88,7 +103,7 @@ function VotingResultsSection({ electionSummary, candidates }) {
                           <CircularProgressbar
                             value={parseFloat(electionSummary.provinceVotes[provinceFilter.value].voterTurnout) || 0}
                             maxValue={100}
-                            text={`${electionSummary.provinceVotes[provinceFilter.value].voterTurnout}`}
+                            text={`${electionSummary.provinceVotes[provinceFilter.value].voterTurnout}%`}
                             styles={buildStyles({
                               pathColor: `white`,
                               textColor: 'black',
