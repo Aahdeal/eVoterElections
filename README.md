@@ -28,8 +28,8 @@ Setup and Installation
 Clone the Repository:
 
 ## bash
-### git clone https://github.com/Aahdeal/eVoterElections.git
-### cd eVotingSystem
+git clone https://github.com/Aahdeal/eVoterElections.git
+cd eVotingSystem
 
 ## Install Dependencies:
 ## bash
@@ -42,13 +42,13 @@ Environment Variables:
 
 Add sensitive keys (like Firebase credentials) to environment variables:
 ### makefile
-### REACT_APP_FIREBASE_API_KEY=your_api_key
-### REACT_APP_FIREBASE_AUTH_DOMAIN=your_auth_domain
+REACT_APP_FIREBASE_API_KEY=your_api_key
+REACT_APP_FIREBASE_AUTH_DOMAIN=your_auth_domain
 ...
 ## Build the Project:
 
 ## bash
-### npm run build
+npm run build
 
 ## Deploy to Server:
 Upload the contents of the build/ directory to your hosting server's public_html folder.
@@ -56,7 +56,7 @@ Running the Project Locally
 Start the Development Server:
 
 ## bash
-### npm start
+npm start
 
 ## Access the Application:
 Open your browser and navigate to http://localhost:3000.
