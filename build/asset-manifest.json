@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "./static/css/main.a6ea1db9.css",
+    "main.js": "./static/js/main.32ccfdaf.js",
+    "static/js/453.240a83dc.chunk.js": "./static/js/453.240a83dc.chunk.js",
+    "static/media/skill-bg.jpg": "./static/media/skill-bg.3f0c06d19a55f23058ca.jpg",
+    "index.html": "./index.html",
+    "main.a6ea1db9.css.map": "./static/css/main.a6ea1db9.css.map",
+    "main.32ccfdaf.js.map": "./static/js/main.32ccfdaf.js.map",
+    "453.240a83dc.chunk.js.map": "./static/js/453.240a83dc.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a6ea1db9.css",
+    "static/js/main.32ccfdaf.js"
+  ]
+}
