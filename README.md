@@ -1,8 +1,25 @@
 # eVoting System
+This website is hosted with afrihost reachable at: [https://](https://evoting.co.za/)
 The eVoting System is a secure and user-friendly platform for conducting elections digitally. This project allows registered voters to securely cast their votes for candidates, view real-time election results, and analyze voter turnout statistics.
 
-### Class Diagram
+## Tasks
+### Task 1
+Website template integrated from: [( https://www.free-css.com/free-css-templates/page290/brainwave ) ](https://www.free-css.com/free-css-templates/page290/brainwave)
+### Task 2
+Class Diagram
 ![image](https://github.com/user-attachments/assets/aa1e5e1a-4b21-417c-9b43-6af8a7ede5a7)
+### Task 3
+Implemented throughout the application
+### Task 4
+This website is built using firebase realtimeDB which is a NoSQL database
+### Task 5
+Registration verification can be found in: src/services/validationService
+Email API verification can be found on line 23 of that file.
+### Task 6
+Authentication via firebase authentication
+### Task 7
+GitHub Repo: https://github.com/Aahdeal/eVoterElections
+
 
 ## Features
 User Registration and Authentication:
