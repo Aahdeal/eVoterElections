@@ -22,6 +22,7 @@ class Voter extends User {
           // Update hasVoted
           await update(voterRef, { hasVoted: true });
           console.log(`Vote successful ${this.uid}`);
+          alert("You have successfully voted!");
           this.hasVoted = true;
           return true;
         } else {
