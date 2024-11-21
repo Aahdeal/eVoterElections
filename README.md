@@ -8,6 +8,7 @@ The eVoting System is a secure and user-friendly platform for conducting electio
 Website template integrated from: [( https://www.free-css.com/free-css-templates/page290/brainwave ) ](https://www.free-css.com/free-css-templates/page290/brainwave)
 ### Task 2
 Class Diagram
+
 ![image](https://github.com/user-attachments/assets/aa1e5e1a-4b21-417c-9b43-6af8a7ede5a7)
 ### Task 3
 Implemented throughout the application
