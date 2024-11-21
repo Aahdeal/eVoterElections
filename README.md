@@ -1,5 +1,6 @@
 # eVoting System
-This website is hosted with afrihost reachable at: [https://](https://evoting.co.za/)
+This website is hosted with afrihost reachable at: [https://evoting.co.za/](https://evoting.co.za/)
+
 The eVoting System is a secure and user-friendly platform for conducting elections digitally. This project allows registered voters to securely cast their votes for candidates, view real-time election results, and analyze voter turnout statistics.
 
 ## Tasks
