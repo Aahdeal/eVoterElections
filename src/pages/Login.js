@@ -31,7 +31,7 @@ const Login = () => {
       return;
     }
 
-    // Check if password meets requirements (e.g., minimum length of 6 characters)
+    // Check if password requirements
     if (password.length < 6) {
       setError('Password must be at least 6 characters long.');
       return;
@@ -53,7 +53,7 @@ const Login = () => {
           const voterData = snapshot.val();
           const voter = new Voter(user.email, voterData.idNumber, voterData.hasVoted, userId, voterData.province, auth);
   
-          // Store the Voter object in session storage
+          // Store the Voter object in session
           sessionStorage.setItem('voter', JSON.stringify(voter));
           console.log('Voter object stored in session:', voter);
           navigate("/");

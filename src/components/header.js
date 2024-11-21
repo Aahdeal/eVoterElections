@@ -13,7 +13,6 @@ const Header = () => {
     if (storedVoterData) {
       const loadedVoter = new Voter(storedVoterData.email, storedVoterData.idNumber, storedVoterData.hasVoted, storedVoterData.uid, storedVoterData.province);
       setVoter(loadedVoter);
-      console.log(loadedVoter.hasVoted)
     }
   }, []);
 
@@ -21,10 +20,8 @@ const Header = () => {
     try {
       // Sign out the user from Firebase
       await signOut(auth);
-
       // Remove Voter object from session storage
       sessionStorage.removeItem('voter');
-
       console.log('User logged out successfully and voter removed from session.');
       window.location.reload();
     } catch (error) {

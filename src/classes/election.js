@@ -1,8 +1,9 @@
-// src/classes/Election.js
+//Election.js
 import { db } from '../firebase/firebaseConfig';
 import { ref, get } from 'firebase/database';
 
 class Election {
+  //when this object is created it resets all current election data
   constructor() {
     this.resetElectionData();
   }
@@ -32,6 +33,7 @@ class Election {
     this.resetElectionData(); // Reset data before fetching
 
     try {
+      //gets the firebase references for users and votes
       const votersRef = ref(db, 'users');
       const votesRef = ref(db, 'votes');
 
@@ -41,6 +43,7 @@ class Election {
         const votersData = votersSnapshot.val();
         this.numVoters = Object.keys(votersSnapshot.val()).length;
 
+        // gets voters per province
         for (const voterID in votersData) {
           const voter = votersData[voterID];
           const voterProvince = voter.province;
@@ -88,12 +91,14 @@ class Election {
     }
   }
 
+  //calculates % voters who have voted
   calculateVoterTurnout() {
     if (this.numVoters > 0) {
       this.voterTurnout = ((this.totalVotes / this.numVoters) * 100).toFixed(2);
     }
   }
 
+  //calculates % voters who have voted in each province
   calculateProvinceVoterTurnout() {
     Object.keys(this.provinceVotes).forEach(province => {
       const { totalVotes, totalVoters } = this.provinceVotes[province];
@@ -103,6 +108,7 @@ class Election {
     });
   }
 
+  //returns the object
   getElectionSummary() {
     return {
       numVoters: this.numVoters,

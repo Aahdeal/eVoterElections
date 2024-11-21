@@ -4,12 +4,14 @@ import { db } from '../firebase/firebaseConfig';
 import { ref, get } from 'firebase/database';
 import Candidate from '../classes/candidate';
 
+//hook that gets candidates on mount
 export const useFetchCandidates = () => {
   const [candidates, setCandidates] = useState([]);
 
   useEffect(() => {
     const fetchCandidates = async () => {
       try {
+        //gets data from firebase
         const snapshot = await get(ref(db, 'candidates'));
         if (snapshot.exists()) {
           const candidatesData = snapshot.val();

@@ -5,6 +5,7 @@ import useCheckVoterStatus from '../hooks/useCheckVoterStatus';
 
 
 function VoteSection({ candidates, voter }) {
+  //checks user voting status to allow user to vote or not
   const hasVoted = useCheckVoterStatus(voter?.uid);
 
   return (

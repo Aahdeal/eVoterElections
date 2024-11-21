@@ -7,6 +7,7 @@ import 'react-circular-progressbar/dist/styles.css';
 function VotingResultsSection({ electionSummary, candidates }) {
   const [provinceFilter, setProvince] = useState("");
 
+  //sets provinces for filtering
   const provinces = [
     { value: 'Gauteng', label: 'Gauteng' },
     { value: 'Western Cape', label: 'Western Cape' },

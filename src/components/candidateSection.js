@@ -2,6 +2,7 @@
 import React from 'react';
 
 function CandidateSection({ candidates }) {
+  //displays candidates
   return (
     <section className="candidate_section layout_padding-bottom" id="candidates">
       <div className="container">

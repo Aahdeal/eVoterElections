@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+//Task 5
 class ValidationService {
   static idRegex = /^[0-9]{13}$/;  // Regex for validating South African ID numbers
 
@@ -18,7 +19,7 @@ class ValidationService {
     return password === confirmPassword;
   }
 
-  // Verify if the email is valid and not disposable
+  // Verify if the email is valid and not disposable (task 5)
   static async verifyEmail(email) {
     try {
       const response = await axios.get(`https://api.usercheck.com/email/${email}`, {

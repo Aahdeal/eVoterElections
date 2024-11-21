@@ -1,10 +1,10 @@
-// src/components/AboutSection.js
+//AboutSection.js
 import React from 'react';
 import useCheckVoterStatus from '../hooks/useCheckVoterStatus';
 
 function AboutSection({ voter }) {
+  //checks if the user has voted if they're logged in and changes voting ability
   const hasVoted = useCheckVoterStatus(voter?.uid);
-  //create voter object, set voter to it, check ahsvoated, etc etc
   return (
     <section className="about_section layout_padding">
       <div className="about_container">
@@ -22,7 +22,7 @@ function AboutSection({ voter }) {
             <div className="detail-box">
               <h2>eVoting Platform</h2>
               <div className="viewButtons">
-                {voter && !hasVoted && <a href="#vote">Vote Now</a>}
+                {voter && !hasVoted && <a href="#vote">Vote Now</a> }
                 {(!voter || hasVoted) && <a href="#results">View results</a>}
                 <a href="#candidates">View Candidates</a>
               </div>

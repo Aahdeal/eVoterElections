@@ -19,6 +19,7 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  //List for province dropdown
   const provinces = [
     { value: 'Gauteng', label: 'Gauteng' },
     { value: 'Western Cape', label: 'Western Cape' },
@@ -70,12 +71,12 @@ const Register = () => {
     }
 
     try {
-      // Firebase authentication
+      // Firebase auth
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const userId = userCredential.user.uid;
       console.log(userId);
 
-      // Add user data to Firebase Realtime Database
+      // Add user data to Firebase
       await set(ref(db, 'users/' + userId), {
         name,
         surname,
@@ -88,7 +89,7 @@ const Register = () => {
       console.log('User registered successfully!');
       setError('');
 
-      // Redirect to login page or show success message
+      // Redirect to login page
       navigate('/login');
     } catch (error) {
       setError(error.message);
@@ -97,6 +98,7 @@ const Register = () => {
     }
   };
 
+  //scrolls to top of page to display error
   function scrollToError(){
     const errorMsg = document.getElementById('errorMessage');
     if (errorMsg) {

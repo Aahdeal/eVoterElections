@@ -7,12 +7,15 @@ import VotingResultsSection from '../components/votingResultsSection';
 import VoteSection from '../components/voteSection';
 import CandidateSection from '../components/candidateSection';
 
+//Task 3: Component based architecture
 function Home() {
+  //populates data
   const candidates = useFetchCandidates();
   const electionSummary = useElectionSummary();
   const [voter, setVoter] = useState(null);
 
   useEffect(() => {
+    //gets user info
     const storedVoterData = JSON.parse(sessionStorage.getItem('voter'));
     if (storedVoterData) {
       setVoter(storedVoterData);
@@ -20,6 +23,7 @@ function Home() {
     console.log(storedVoterData);
   }, []);
 
+  //calls components and sends relevant information to it
   return (
     <div>
       <AboutSection voter={voter} />

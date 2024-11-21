@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Footer from './components/footer';
 
+//Task 3: Component based architecture
 function App() {
   return (
     <Router>
