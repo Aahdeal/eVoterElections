@@ -6,6 +6,7 @@ import 'react-circular-progressbar/dist/styles.css';
 
 function VotingResultsSection({ electionSummary, candidates }) {
   const [provinceFilter, setProvince] = useState("");
+  console.log(electionSummary.numVoters/electionSummary.populationSize*100);
 
   //sets provinces for filtering
   const provinces = [
@@ -53,7 +54,7 @@ function VotingResultsSection({ electionSummary, candidates }) {
                       <CircularProgressbar
                         value={parseFloat((electionSummary.numVoters/electionSummary.populationSize*100)) || 0}
                         maxValue={100}
-                        text={`${(electionSummary.numVoters/electionSummary.populationSize*100)}%`}
+                        text={`${(electionSummary.numVoters/electionSummary.populationSize*100).toFixed(2)}%`}
                         styles={buildStyles({
                           pathColor: `white`,
                           textColor: 'black',
