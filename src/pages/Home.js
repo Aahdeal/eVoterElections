@@ -28,7 +28,6 @@ function Home() {
   return (
     <div>
       <AboutSection voter={voter} />
-      <VotingResultsSection electionSummary={electionSummary} candidates={candidates} />
       <VoteSection candidates={candidates} voter={voter} />
       <CandidateSection candidates={candidates} />
     </div>

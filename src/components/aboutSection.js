@@ -1,11 +1,8 @@
 //AboutSection.js
 
 import React from 'react';
-import useCheckVoterStatus from '../hooks/useCheckVoterStatus';
 
 function AboutSection({ voter }) {
-  //checks if the user has voted if they're logged in and changes voting ability
-  const hasVoted = useCheckVoterStatus(voter?.uid);
   return (
     <section className="about_section layout_padding">
       <div className="about_container">
@@ -14,18 +11,16 @@ function AboutSection({ voter }) {
             <div className="img-box">
               <img
                 id="voteImage"
-                src="https://st2.depositphotos.com/7752738/12006/v/450/depositphotos_120061688-stock-illustration-voting-box-isometric-vector-with.jpg"
+                src="https://st.depositphotos.com/3001613/3810/v/450/depositphotos_38107455-stock-illustration-cape-town-travel-card.jpg"
                 alt="About"
               />
             </div>
           </div>
           <div className="col-md-5">
             <div className="detail-box">
-              <h2>eVoting Platform</h2>
+              <h2>Welcome to the <br/> Cape Town Festival</h2>
               <div className="viewButtons">
-                {voter && !hasVoted && <a href="#vote">Vote Now</a> }
-                {(!voter || hasVoted) && <a href="#results">View results</a>}
-                <a href="#candidates">View Candidates</a>
+                <a href="#candidates">Upcoming Events</a>
               </div>
             </div>
           </div>
