@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import ValidationService from '../services/validationService';
 
+
 const Register = () => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');

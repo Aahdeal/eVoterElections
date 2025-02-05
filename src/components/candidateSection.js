@@ -1,4 +1,5 @@
 // src/components/CandidateSection.js
+
 import React from 'react';
 
 function CandidateSection({ candidates }) {

@@ -7,6 +7,7 @@ import { Voter } from '../classes/voter';
 import { ref, get } from 'firebase/database';
 import { Link } from 'react-router-dom';
 
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

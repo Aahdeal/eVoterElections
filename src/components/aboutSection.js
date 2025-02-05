@@ -1,4 +1,5 @@
 //AboutSection.js
+
 import React from 'react';
 import useCheckVoterStatus from '../hooks/useCheckVoterStatus';
 

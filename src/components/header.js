@@ -6,6 +6,7 @@ import { signOut } from 'firebase/auth';
 import {Voter} from '../classes/voter'
 
 const Header = () => {
+  
   const [voter, setVoter] = useState(null);
 
   useEffect(() => {

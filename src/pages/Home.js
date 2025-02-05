@@ -7,6 +7,7 @@ import VotingResultsSection from '../components/votingResultsSection';
 import VoteSection from '../components/voteSection';
 import CandidateSection from '../components/candidateSection';
 
+
 //Task 3: Component based architecture
 function Home() {
   //populates data
